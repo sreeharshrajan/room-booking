@@ -12,12 +12,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, Uuids;
+    use HasFactory, Uuids, Notifiable;
 
     protected $primaryKey = 'uuid';
 
     protected $guarded = ['uuid'];
 
+    protected $guard = 'admin';
     protected $table = 'admins';
 
     public static function getTableName()

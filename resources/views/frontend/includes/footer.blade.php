@@ -53,7 +53,21 @@
             </div>
             <div class="col-md-2 col-sm-6 col-6 mb-4">
                 <div>
-                    {{-- <h6 class="text-sm">Resources</h6> --}}
+                    <h6 class="text-sm">Resources</h6>
+                    <ul class="flex-column ms-n3 nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin" target="_blank">
+                                Admin Login
+                            </a>
+                        </li>
+                        @if(auth()->guard('admin')->check())
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin" target="_blank">
+                                Dashboard
+                            </a>
+                        </li>
+                        @endif
+                    </ul>
                 </div>
             </div>
             <div class="col-md-2 col-sm-6 col-6 mb-4">
