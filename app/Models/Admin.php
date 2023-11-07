@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Traits\Uuids;
 
+use Laravel\Sanctum\HasApiTokens;
+
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasFactory, Uuids;
 
@@ -16,7 +18,7 @@ class User extends Authenticatable
 
     protected $guarded = ['uuid'];
 
-    protected $table = 'users';
+    protected $table = 'admins';
 
     public static function getTableName()
     {
