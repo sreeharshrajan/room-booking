@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('no_of_guests')->nullable();
-            $table->decimal('amount', 10, 6)->default(0);
+            $table->decimal('amount', 10, 2)->nullable()->default(0);
             $table->tinyInteger('status')->default(2)->comment('0 => NotBooked; 1=>Booked; 2=>Pending');
             $table->text('remarks')->nullable();
             $table->timestamps();

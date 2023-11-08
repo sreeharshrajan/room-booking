@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Room;
+use App\Models\User;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -9,11 +12,17 @@ use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
+    /**
+     * Display admin login form
+     */
     public function showLoginForm()
     {
         return view('admin.login.index');
     }
 
+    /**
+     * Process admin login form
+     */
     public function login(Request $request)
     {
         $this->validate($request,[
@@ -33,32 +42,22 @@ class AdminController extends Controller
 
     }
 
-    public function showDashboard() {
-        return view('admin.dashboard.index');
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect('home');
     }
 
     /**
-     * Display a listing of the resource.
+     * Display admin dashboard
      */
     public function index()
     {
-        //
-    }
+        $totalUsers = User::count();
+        $totalRooms = Room::count();
+        $totalBookings = Booking::count();
+        return view('admin.dashboard.index', compact('totalRooms', 'totalBookings', 'totalUsers'));
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -81,14 +80,6 @@ class AdminController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
     {
         //
     }

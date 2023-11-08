@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="col-4 ps-0">
                                     <button type="button"
-                                        class="btn bg-gradient-info mb-0 h-100 position-relative z-index-2">Subscribe</button>
+                                        class="btn bg-gradient-primary mb-0 h-100 position-relative z-index-2">Subscribe</button>
                                 </div>
                             </div>
                         </div>

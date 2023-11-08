@@ -4,9 +4,9 @@
             <div class="col-md-3 mb-4 ms-auto">
                 <div>
                     <a href="#">
-                        <img src="./assets/img/logo-ct-dark.png" class="mb-3 footer-logo" alt="main_logo">
+                        <img src="{{ asset('assets/img/logo-ct-dark.png') }}" class="mb-3 footer-logo" alt="logo">
                     </a>
-                    <h6 class="font-weight-bolder mb-4">AW Booking</h6>
+                    <h6 class="font-weight-bolder mb-4">BookNest</h6>
                 </div>
                 <div>
                     <ul class="d-flex flex-row ms-n3 nav">
@@ -56,13 +56,13 @@
                     <h6 class="text-sm">Resources</h6>
                     <ul class="flex-column ms-n3 nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin" target="_blank">
+                            <a class="nav-link" href="{{ route('admin.login-form') }}" target="_blank">
                                 Admin Login
                             </a>
                         </li>
                         @if(auth()->guard('admin')->check())
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin" target="_blank">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}" target="_blank">
                                 Dashboard
                             </a>
                         </li>
@@ -82,8 +82,7 @@
                         All rights reserved. Copyright ©
                         <script>
                             document.write(new Date().getFullYear())
-                        </script>2023 Material Kit by <a href="https://www.creative-tim.com"
-                            target="_blank">Creative Tim</a>.
+                        </script>
                     </p>
                 </div>
             </div>

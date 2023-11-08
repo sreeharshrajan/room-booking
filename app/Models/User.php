@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Uuids, Notifiable;
+    use HasFactory, Uuids;
 
     protected $primaryKey = 'uuid';
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('sub_desc')->nullable();
             $table->integer('max_occupancy')->nullable();
-            $table->decimal('rate', 10, 6)->default(0);
+            $table->decimal('rate', 10, 2)->default(0);
             $table->string('image')->nullable();
             $table->timestamps();
         });

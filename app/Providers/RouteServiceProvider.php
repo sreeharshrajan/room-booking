@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
 
     /**
@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
                 'namespace' => $this->namespace,
             ], function ($router) {
                 require base_path('routes/web.php');
-                // require base_path('routes/modules/user.php');
+                require base_path('routes/modules/user.php');
                 require base_path('routes/modules/admin.php');
             });
         });

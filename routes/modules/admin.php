@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +15,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['as' => 'admin.', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
-    Auth::routes(['register' => false]);
-    Route::get('/login', 'AdminController@showLoginForm');
-    Route::post('/confirm-login', 'AdminController@login')->name('login');
 
-    Route::get('/', 'AdminController@showDashboard')->name('dashboard')->middleware('auth:admin');
-    Route::post('/logout', 'AdminController@logout')->name('logout')->middleware('auth:admin');
+    Auth::routes(['register' => false]);
+
+    Route::middleware(['guest:admin'])->group(function () {
+        Route::get('/login', 'AdminController@showLoginForm')->name('login-form');
+        Route::post('/confirm-login', 'AdminController@login')->name('login');
+    });
+
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/dashboard', 'AdminController@index')->name('dashboard');
+        Route::get('/logout', 'AdminController@logout')->name('logout');
+
+        Route::resource('rooms', 'RoomController');
+
+        Route::resource('booking', 'BookingController');
+
+        Route::resource('user', 'UserController');
+    });
+
 });
 

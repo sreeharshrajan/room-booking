@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Room Booking APP" />
     <meta name="author" content="Sreeharsh" />
-    {{-- <title>{{ $title }} | {{ config('app.name') }}</title> --}}
+    <!--csrf-->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!--title-->
+    <title>{{ config('app.name') }}</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -20,10 +23,21 @@
 </head>
 
 <body>
-
-    <div id="main" class="">
+    @include('admin.includes.navbar')
+    <div id="main" class="min-vh-50 container mt-5">
+        {{-- <div class="mb-4 w-100 w-md-50 w-lg-25">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a
+                            href="#">Navigation</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Pagination</li>
+                </ol>
+            </nav>
+            <h3>Pagination</h3>
+        </div> --}}
         @yield('content')
     </div>
+    @include('frontend.includes.footer')
 </body>
 
 <!-- Bootstrap JS -->
@@ -37,4 +51,5 @@
 
 <!-- Theme JS -->
 <script src="{{ asset('assets/js/material-kit.min.js') }}"></script>
+
 </html>

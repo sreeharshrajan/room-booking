@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return $this->renderView('frontend.home.index', [], 'Home');
     }
 }
