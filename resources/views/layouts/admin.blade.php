@@ -38,8 +38,8 @@
         @yield('content')
     </div>
     @include('frontend.includes.footer')
+    @stack('scripts')
 </body>
-
 <!-- Bootstrap JS -->
 <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 <!-- Core -->

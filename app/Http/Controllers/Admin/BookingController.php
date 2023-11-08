@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Room;
+use App\Models\User;
 use App\Models\Booking;
 use Illuminate\Http\Request;
-use Illuminate\Facades\Validator;
 
+use Illuminate\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Constants\BookingConstants;
 
 class BookingController extends Controller
 {
@@ -18,7 +20,12 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::get();
+        $bookings = DB::table(Booking::getTableName().' as b')
+        ->select('b.uuid', 'b.start_date', 'b.end_date', 'b.status', 'b.remarks', 'b.no_of_guests', 'r.room_no', 'u.name as booking_user')
+        ->join(Room::getTableName().' as r', 'r.uuid', 'b.room_id')
+        ->join(User::getTableName().' as u', 'u.uuid', 'b.user_id')
+        ->orderBy('b.start_date', 'DESC')
+        ->get();
         return $this->renderView('admin.booking.index', compact('bookings'), 'Booking');
     }
 
@@ -27,8 +34,9 @@ class BookingController extends Controller
      */
     public function create()
     {
+        $users = User::get();
         $rooms = Room::get();
-        return $this->renderView('admin.booking.create', compact('rooms'), 'Book a room');
+        return $this->renderView('admin.booking.create', compact('rooms', 'users'), 'Book a room');
     }
 
     /**
@@ -37,17 +45,26 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'room_id' => 'required|exists:rooms,id',
-            'number' => 'required',
+            'room_id' => 'required',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'no_of_guests' => 'required|integer',
-            'amount' => 'required|numeric',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'no_of_guests' => 'required|integer|max:2',
             'remarks' => 'nullable',
         ]);
 
-        Booking::create($request->all());
+        $lastNumber = Booking::get('number')->last();
+        $number = $lastNumber ? $lastNumber->number + 1 : 1000;
+
+        Booking::create([
+            'number' =>  $number,
+            'user_id' => auth()->user()->uuid,
+            'room_id' => $request->room_id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'no_of_guests' => $request->no_of_guests,
+            'remarks' => $request->remarks,
+            'status' => BookingConstants::BOOKED,
+        ]);
 
         return redirect('admin.booking.create')->with('success', 'Booking created successfully!');
     }
@@ -57,7 +74,13 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('admin.bookings.show', compact('booking'));
+        $booking = DB::table(Booking::getTableName().' as b')
+        ->select('b.uuid', 'b.number', 'b.created_at', 'b.start_date', 'b.end_date', 'b.status', 'b.remarks', 'b.no_of_guests', 'r.room_no', 'u.name as booking_user')
+        ->join(Room::getTableName().' as r', 'r.uuid', 'b.room_id')
+        ->join(User::getTableName().' as u', 'u.uuid', 'b.user_id')
+        ->where('b.uuid', $booking->uuid)
+        ->first();
+        return view('admin.booking.show', compact('booking'));
     }
 
     /**
@@ -82,6 +105,6 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         $booking->delete();
-        return  redirect()->route('admin.bookings.index')->with('success', 'Booking deleted successfully!');
+        return  redirect()->route('admin.booking.index')->with('success', 'Booking deleted successfully!');
     }
 }

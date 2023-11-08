@@ -24,22 +24,22 @@
                 <h2>Our Rooms</h2>
                 <p class="lead">Choose the best from the best.</p>
             </div>
-            <div class="row">
+            <div class="row g-4">
                 @foreach ($rooms as $room)
                     <div class="col-md-4">
-                        <div class="card text-center">
-                            <div class="overflow-hidden position-relative border-radius-lg bg-cover p-3"
+                        <div class="card text-center shadow-lg">
+                            <div class="overflow-hidden position-relative border-radius-lg bg-cover "
                                 style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/window-desk.jpg')">
                                 <span class="mask bg-gradient-primary opacity-7"></span>
                                 <div class="card-body position-relative z-index-1 d-flex flex-column mt-5">
                                     <h3 class="text-white font-weight-bolder">{{ $room->name }}</h3>
                                     <p class="text-white font-weight-light">{{ $room->description }}</p>
                                     <p class="text-white font-weight-light">₹ {{ $room->rate }} <small class="text-xs">/night</small> </p>
-                                    {{-- <a class="text-white btn text-sm font-weight-bold mb-0 icon-move-right mt-4"
-                                        href="{{ route('user.booking.create', $room->uuid) }}">
+                                    <a class="text-white btn text-sm font-weight-bold mb-0 icon-move-right mt-4"
+                                        href="{{ route('user.booking.create') }}">
                                         Book now &nbsp;
                                         <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    </a> --}}
+                                    </a>
                                 </div>
                             </div>
                         </div>

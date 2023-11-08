@@ -14,13 +14,24 @@
                 <div class="col-6">
                     <div class="input-group input-group-static my-3">
                         <label class="" for="start_date">From Date</label>
-                        <input type="start_date" class="form-control @error('start_date') is-invalid @enderror"/>
+                        <input type="date" class="form-control @error('start_date') is-invalid @enderror"/>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="input-group input-group-static my-3">
                         <label class="" for="end_date">To Date</label>
-                        <input type="end_date" class="form-control @error('end_date') is-invalid @enderror"/>
+                        <input type="date" class="form-control @error('end_date') is-invalid @enderror"/>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="input-group input-group-static my-3">
+                        <label class="" for="user_id">User</label>
+                        <select class="form-control @error('user_id') is-invalid @enderror" id="user_id">
+                            <option value="">Select a user</option>
+                            @foreach ($users as $user)
+                            <option value="{{ $user->uuid }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="col-6">

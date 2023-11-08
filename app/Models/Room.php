@@ -20,4 +20,5 @@ class Room extends Model
     {
         return with(new static)->getTable();
     }
+
 }

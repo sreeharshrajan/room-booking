@@ -17,18 +17,19 @@
         </div>
         <div class="card-body p-2">
             <div class="table-responsive">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0 text-center">
                     <thead>
                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Name</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Room No</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Start Date</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder">End Date</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">No. of Guests</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder ">No. of Guests</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset($bookings))
+                        @if (empty($bookings))
                             <tr>
                                 <td class="text-sm font-weight-normal mb-0 text-center text-warning" colspan="5">No
                                     Bookings Found</td>
@@ -36,7 +37,27 @@
                         @else
                             @foreach ($bookings as $booking)
                                 <tr>
-                                    <td class="text-sm font-weight-normal mb-0">{{ $booking->name }}</td>
+                                    <td class="text-sm font-weight-normal mb-0">{{ $booking->booking_user }}</td>
+                                    <td class="text-sm font-weight-normal mb-0">{{ $booking->room_no }}</td>
+                                    <td class="text-sm font-weight-normal mb-0">
+                                        {{ DateHelper::format($booking->start_date) }}
+                                    </td>
+                                    <td class="text-sm font-weight-normal mb-0">
+                                        {{ DateHelper::format($booking->end_date) }}
+                                    </td>
+                                    <td class="text-sm font-weight-normal mb-0 text-center">{{ $booking->no_of_guests }}</td>
+                                    <td class="justify-content-center d-flex">
+                                        <a href="{{ route('admin.booking.show', $booking->uuid) }}" class="btn btn-link text-secondary mb-0"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        <form action="{{ route('admin.booking.destroy', $booking->uuid) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="text-danger px-1 btn delete" title="delete">
+                                                <span class="btn-inner--icon">
+                                                    <i class="fa fa-trash"></i>
+                                                </span>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif

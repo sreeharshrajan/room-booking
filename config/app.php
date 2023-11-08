@@ -182,7 +182,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'BookingConstants' => \App\Http\Constants\BookingConstants::class,
+
+        'DateHelper' => \App\Http\Helpers\DateHelper::class,
     ])->toArray(),
 
 ];

@@ -50,7 +50,7 @@
                     </div>
                     <div>
                         <h5 class="card-title">Available Rooms</h5>
-                        <h2 class="card-subtitle mb-2 text-primary">{{ $totalBookings }}</h2>
+                        <h2 class="card-subtitle mb-2 text-primary">{{ $availableRooms }}</h2>
                     </div>
                 </div>
                 {{-- <i class="fa fa-calendar-o" aria-hidden="true"></i>

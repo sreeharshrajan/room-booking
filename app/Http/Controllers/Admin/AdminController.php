@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -53,10 +55,20 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $today = Carbon::now()->toDateString();
         $totalUsers = User::count();
         $totalRooms = Room::count();
         $totalBookings = Booking::count();
-        return view('admin.dashboard.index', compact('totalRooms', 'totalBookings', 'totalUsers'));
+        $availableRooms = DB::table(Room::getTableName().' as r')
+        ->leftJoin(Booking::getTableName().' as b', 'b.room_id', 'r.uuid')
+        ->where(function($query) use ($today) {
+            $query->whereNull('b.room_id')
+                  ->orWhereDate('b.start_date', '<>', $today)
+                  ->orWhereDate('b.end_date', '<>', $today);
+        })
+        ->select('r.*')
+        ->count();
+        return view('admin.dashboard.index', compact('totalRooms', 'totalBookings', 'totalUsers', 'availableRooms'));
 
     }
 

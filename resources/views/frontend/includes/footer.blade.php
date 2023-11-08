@@ -9,9 +9,9 @@
                     <h6 class="font-weight-bolder mb-4">BookNest</h6>
                 </div>
                 <div>
-                    <ul class="d-flex flex-row ms-n3 nav">
+                    <ul class="d-flex flex-row ms-n3 nav"  target="_blank">
                         <li class="nav-item">
-                            <a class="nav-link pe-1" href="#" target="_blank">
+                            <a class="nav-link pe-1" href="#" >
                                 <i class="fab fa-facebook text-lg opacity-8" aria-hidden="true"></i>
                             </a>
                         </li>
@@ -34,18 +34,18 @@
                     <h6 class="text-sm">Company</h6>
                     <ul class="flex-column ms-n3 nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#" target="_blank">
+                            <a class="nav-link" href="#">
                                 About Us
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" target="_blank">
+                            <a class="nav-link" href="#">
                                 Contact Us
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" target="_blank">
-                                Blog
+                            <a class="nav-link" href="{{ route('user.rooms.index') }}" >
+                                Rooms
                             </a>
                         </li>
                     </ul>
@@ -53,17 +53,22 @@
             </div>
             <div class="col-md-2 col-sm-6 col-6 mb-4">
                 <div>
-                    <h6 class="text-sm">Resources</h6>
+                    <h6 class="text-sm">Admin</h6>
                     <ul class="flex-column ms-n3 nav">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.login-form') }}" target="_blank">
-                                Admin Login
+                                Login
                             </a>
                         </li>
                         @if(auth()->guard('admin')->check())
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.dashboard') }}" target="_blank">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}" >
                                 Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}" >
+                                Users
                             </a>
                         </li>
                         @endif
@@ -71,7 +76,19 @@
                 </div>
             </div>
             <div class="col-md-2 col-sm-6 col-6 mb-4">
-
+                <h6 class="text-sm">User</h6>
+                <ul class="flex-column ms-n3 nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.booking.index') }}" >
+                            Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" >
+                            Profile
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="col-md-2 col-sm-6 col-6 mb-4 me-auto">
 

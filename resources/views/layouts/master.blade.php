@@ -14,12 +14,13 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet">
 
     <!-- Theme Style CSS -->
     <link href="{{ asset('assets/css/material-kit.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     <script src="{{ asset('https://kit.fontawesome.com/42d5adcbca.js') }}" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -28,17 +29,58 @@
         @yield('content')
     </div>
     @include('frontend.includes.footer')
+    @stack('scripts')
 </body>
+<script type="text/javascript">
+    function calculateRooms() {
+        var guests = parseInt(document.getElementById("guests").value);
+        if (isNaN(guests) || guests < 0) {
+            alert("Please enter a valid number of persons.");
+            return;
+        }
 
+        var rooms;
+        if (guests <= 2) {
+            rooms = 1;
+        } else {
+            rooms = Math.ceil(guests / 2);
+        }
+
+        document.getElementById('roomsRequired').innerText = `Number of rooms needed: ${rooms}`;
+    }
+
+    $(document).ready(function() {
+        $('#start_date, #end_date').change(function() {
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            console.log(end_date, start_date)
+            if (start_date && end_date) {
+                $.ajax({
+                    url: '/get-available-rooms',
+                    type: 'GET',
+                    data: { start_date: start_date, end_date: end_date },
+                    success: function(data) {
+                        var options = '<option value="">Select a room</option>';
+                        $.each(data.rooms, function(index, room) {
+                            options += '<option value="' + room.uuid + '">' + room.room_no + '</option>';
+                        });
+                        console.log(data.rooms)
+                        $('#room_id').html(options);
+                    }
+                });
+            }
+        });
+    });
+</script>
 <!-- Bootstrap JS -->
 <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 <!-- Core -->
 <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/moment.min.js') }}"></script>
-{{-- <script src="{{ asset('assets/js/plugins/nouislider.min.js') }}"></script> --}}
 <script src="{{ asset('assets/js/plugins/choices.min.js') }}"></script>
 
 <!-- Theme JS -->
 <script src="{{ asset('assets/js/material-kit.min.js') }}"></script>
+
 </html>
