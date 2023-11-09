@@ -1,7 +1,3 @@
----
-title: Room Booking System
----
-
 # Room Booking System
 
 A Laravel-based web application that facilitates room browsing, selection, and booking for specified dates.
