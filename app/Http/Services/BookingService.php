@@ -10,7 +10,9 @@ class BookingService
 {
     public function availableRooms($fromDate = null, $toDate = null)
     {
-        if (is_null($toDate)) {
+        if ($toDate !== '') {
+            $toDate = $fromDate;
+        }
             $toDate = $fromDate;
         }
         return DB::table(Room::getTableName() . ' as r')
